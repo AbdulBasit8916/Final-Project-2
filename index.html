@@ -13,6 +13,7 @@
 
   <div class="app-shell">
     
+    <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="brand">
         <i class="bi bi-fire brand-mark"></i>
@@ -28,15 +29,19 @@
       </nav>
 
       <div class="sidebar-bottom">
-        <button class="vendor-btn" type="button"><i class="bi bi-plus-circle"></i> Add Vendor</button>
+        <button class="vendor-btn" type="button" onclick="alert('Vendor Registration Feature Coming Soon!')">
+          <i class="bi bi-plus-circle"></i> Add Vendor
+        </button>
         <button class="login-side-btn" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
           <i class="bi bi-box-arrow-in-right"></i> Login
         </button>
       </div>
     </aside>
 
+    <!-- Main Content Area -->
     <main class="main-content">
       
+      <!-- Top Bar -->
       <header class="topbar">
         <div class="top-search">
           <i class="bi bi-search"></i>
@@ -56,6 +61,7 @@
         </div>
       </header>
 
+      <!-- Hero Section -->
       <section class="hero-section" id="home">
         <div class="hero-content">
           <span class="hero-badge"><i class="bi bi-stars"></i> Deliciousness delivered</span>
@@ -82,11 +88,12 @@
         </div>
       </section>
 
+      <!-- Category Filter Block -->
       <section class="section-block">
         <div class="section-heading">
           <div>
             <span class="eyebrow">EXPLORE</span>
-            <h2 style="margin: 0; font-weight: 700;">Food Categories</h2>
+            <h2>Food Categories</h2>
           </div>
         </div>
         <div class="category-grid">
@@ -99,11 +106,12 @@
         </div>
       </section>
 
+      <!-- Food Menu Section -->
       <section class="section-block" id="menu">
         <div class="section-heading">
           <div>
             <span class="eyebrow">OUR MENU</span>
-            <h2 style="margin: 0; font-weight: 700;">Popular Food</h2>
+            <h2>Popular Food</h2>
           </div>
           <div class="filter-buttons">
             <button type="button" class="filter-btn active">All</button>
@@ -115,46 +123,46 @@
         </div>
 
         <div class="food-grid">
+          <!-- Food Card 1 -->
           <div class="food-card">
             <div class="food-img-wrap">
               <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Crispy Fried Chicken" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
             </div>
-            <h5 style="margin-bottom: 5px;">Crispy Fried Chicken</h5>
-            <span class="badge bg-secondary mb-2">Chicken</span>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-              <strong style="color: var(--text-main);">Rs. 850</strong>
-              <button type="button" class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
-                      onclick="addToCart('Crispy Fried Chicken', 850, 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80')">
+            <h5>Crispy Fried Chicken</h5>
+            <div><span class="badge">Chicken</span></div>
+            <div class="food-card-bottom">
+              <strong>Rs. 850</strong>
+              <button type="button" class="primary-btn" onclick="addToCart('Crispy Fried Chicken', 850, 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80')">
                 + Add
               </button>
             </div>
           </div>
 
+          <!-- Food Card 2 -->
           <div class="food-card">
             <div class="food-img-wrap">
               <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Chocolate Lava Cake" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
             </div>
-            <h5 style="margin-bottom: 5px;">Chocolate Lava Cake</h5>
-            <span class="badge bg-secondary mb-2">Desserts</span>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-              <strong style="color: var(--text-main);">Rs. 450</strong>
-              <button type="button" class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
-                      onclick="addToCart('Chocolate Lava Cake', 450, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80')">
+            <h5>Chocolate Lava Cake</h5>
+            <div><span class="badge">Desserts</span></div>
+            <div class="food-card-bottom">
+              <strong>Rs. 450</strong>
+              <button type="button" class="primary-btn" onclick="addToCart('Chocolate Lava Cake', 450, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80')">
                 + Add
               </button>
             </div>
           </div>
 
+          <!-- Food Card 3 -->
           <div class="food-card">
             <div class="food-img-wrap">
               <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Beef Smash Burger" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
             </div>
-            <h5 style="margin-bottom: 5px;">Beef Smash Burger</h5>
-            <span class="badge bg-secondary mb-2">Burgers</span>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-              <strong style="color: var(--text-main);">Rs. 650</strong>
-              <button type="button" class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
-                      onclick="addToCart('Beef Smash Burger', 650, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80')">
+            <h5>Beef Smash Burger</h5>
+            <div><span class="badge">Burgers</span></div>
+            <div class="food-card-bottom">
+              <strong>Rs. 650</strong>
+              <button type="button" class="primary-btn" onclick="addToCart('Beef Smash Burger', 650, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80')">
                 + Add
               </button>
             </div>
@@ -162,15 +170,17 @@
         </div>
       </section>
 
+      <!-- Vendors Section -->
       <section class="section-block" id="vendors">
         <div class="section-heading">
           <div>
             <span class="eyebrow">DISCOVER</span>
-            <h2 style="margin: 0; font-weight: 700;">Our Vendors</h2>
+            <h2>Our Vendors</h2>
           </div>
         </div>
       </section>
 
+      <!-- Footer -->
       <footer>
         <div class="footer-brand">
           <i class="bi bi-fire" style="color: var(--primary);"></i>
@@ -181,20 +191,22 @@
     </main>
   </div>
 
+  <!-- Cart Drawer Overlay -->
   <div class="drawer-overlay" onclick="toggleCart()"></div>
   <div class="cart-drawer">
-    <div class="d-flex justify-content-between align-items-center pb-3 border-bottom">
-      <h5 style="margin: 0;">Your Cart</h5>
+    <div class="d-flex justify-content-between align-items-center pb-3 border-bottom border-secondary">
+      <h5 class="m-0">Your Cart</h5>
       <button type="button" class="close-btn" onclick="toggleCart()">&times;</button>
     </div>
 
     <div class="cart-items"></div>
 
-    <div class="pt-3 border-top">
-      <button type="button" class="primary-btn" style="width: 100%; justify-content: center;">Checkout</button>
+    <div class="pt-3 border-top border-secondary">
+      <button type="button" class="primary-btn w-100 justify-content-center">Checkout</button>
     </div>
   </div>
 
+  <!-- Login Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content custom-modal p-3">
@@ -205,17 +217,17 @@
         <div class="modal-body">
           <form id="loginForm">
             <div class="mb-3">
-              <label class="form-label" style="font-size: 0.9rem;">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="name@gmail.com" required>
+              <label class="form-label">Email Address</label>
+              <input type="email" id="email" class="form-control custom-input" placeholder="name@gmail.com">
             </div>
             <div class="mb-3">
-              <label class="form-label" style="font-size: 0.9rem;">Password</label>
-              <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+              <label class="form-label">Password</label>
+              <input type="password" id="password" class="form-control custom-input" placeholder="••••••••">
             </div>
 
-            <div id="login-error" style="color: #ff5722; font-size: 0.85rem; margin-top: -5px; margin-bottom: 12px; display: none; font-weight: 600;"></div>
+            <div id="login-error" class="login-error-msg"></div>
 
-            <button type="submit" class="primary-btn w-100 justify-content-center">Login</button>
+            <button type="submit" class="primary-btn w-100 justify-content-center mt-2">Login</button>
           </form>
         </div>
       </div>
