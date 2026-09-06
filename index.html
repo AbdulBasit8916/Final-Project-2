@@ -28,8 +28,8 @@
       </nav>
 
       <div class="sidebar-bottom">
-        <button class="vendor-btn"><i class="bi bi-plus-circle"></i> Add Vendor</button>
-        <button class="login-side-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+        <button class="vendor-btn" type="button"><i class="bi bi-plus-circle"></i> Add Vendor</button>
+        <button class="login-side-btn" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
           <i class="bi bi-box-arrow-in-right"></i> Login
         </button>
       </div>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="top-actions">
-          <button class="icon-btn" onclick="toggleCart()">
+          <button class="icon-btn" type="button" onclick="toggleCart()">
             <i class="bi bi-cart3"></i>
             <span class="cart-count">0</span>
           </button>
@@ -63,14 +63,14 @@
           <p>Discover your favorite meals, restaurants and local food vendors in one place.</p>
           <div class="hero-actions">
             <a href="#menu" class="primary-btn">Explore Menu &rarr;</a>
-            <button class="secondary-btn">View Vendors</button>
+            <a href="#vendors" class="secondary-btn">View Vendors</a>
           </div>
         </div>
 
         <div class="hero-food">
           <div class="hero-circle"></div>
           <div class="hero-img-box">
-            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80" class="hero-img" alt="Delicious Soup Bowl">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80" class="hero-img" alt="Delicious Soup Bowl" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
           </div>
 
           <div class="floating-card card-one">
@@ -90,12 +90,12 @@
           </div>
         </div>
         <div class="category-grid">
-          <button class="category-card active"><i class="bi bi-grid-fill"></i> All</button>
-          <button class="category-card"><i class="bi bi-badge-hd"></i> Burgers</button>
-          <button class="category-card"><i class="bi bi-pie-chart-fill"></i> Pizza</button>
-          <button class="category-card"><i class="bi bi-egg-fried"></i> Chicken</button>
-          <button class="category-card"><i class="bi bi-cake2-fill"></i> Desserts</button>
-          <button class="category-card"><i class="bi bi-cup-straw"></i> Drinks</button>
+          <button type="button" class="category-card active"><i class="bi bi-grid-fill"></i> All</button>
+          <button type="button" class="category-card"><i class="bi bi-badge-hd"></i> Burgers</button>
+          <button type="button" class="category-card"><i class="bi bi-pie-chart-fill"></i> Pizza</button>
+          <button type="button" class="category-card"><i class="bi bi-egg-fried"></i> Chicken</button>
+          <button type="button" class="category-card"><i class="bi bi-cake2-fill"></i> Desserts</button>
+          <button type="button" class="category-card"><i class="bi bi-cup-straw"></i> Drinks</button>
         </div>
       </section>
 
@@ -106,24 +106,24 @@
             <h2 style="margin: 0; font-weight: 700;">Popular Food</h2>
           </div>
           <div class="filter-buttons">
-            <button class="filter-btn active">All</button>
-            <button class="filter-btn">Burgers</button>
-            <button class="filter-btn">Pizza</button>
-            <button class="filter-btn">Chicken</button>
-            <button class="filter-btn">Desserts</button>
+            <button type="button" class="filter-btn active">All</button>
+            <button type="button" class="filter-btn">Burgers</button>
+            <button type="button" class="filter-btn">Pizza</button>
+            <button type="button" class="filter-btn">Chicken</button>
+            <button type="button" class="filter-btn">Desserts</button>
           </div>
         </div>
 
         <div class="food-grid">
           <div class="food-card">
             <div class="food-img-wrap">
-              <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Crispy Fried Chicken">
+              <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Crispy Fried Chicken" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
             </div>
             <h5 style="margin-bottom: 5px;">Crispy Fried Chicken</h5>
             <span class="badge bg-secondary mb-2">Chicken</span>
             <div class="d-flex justify-content-between align-items-center mt-2">
               <strong style="color: var(--text-main);">Rs. 850</strong>
-              <button class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
+              <button type="button" class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
                       onclick="addToCart('Crispy Fried Chicken', 850, 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80')">
                 + Add
               </button>
@@ -132,13 +132,13 @@
 
           <div class="food-card">
             <div class="food-img-wrap">
-              <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Chocolate Lava Cake">
+              <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Chocolate Lava Cake" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
             </div>
             <h5 style="margin-bottom: 5px;">Chocolate Lava Cake</h5>
             <span class="badge bg-secondary mb-2">Desserts</span>
             <div class="d-flex justify-content-between align-items-center mt-2">
               <strong style="color: var(--text-main);">Rs. 450</strong>
-              <button class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
+              <button type="button" class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
                       onclick="addToCart('Chocolate Lava Cake', 450, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80')">
                 + Add
               </button>
@@ -147,13 +147,13 @@
 
           <div class="food-card">
             <div class="food-img-wrap">
-              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Beef Smash Burger">
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" class="food-img" alt="Beef Smash Burger" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop'">
             </div>
             <h5 style="margin-bottom: 5px;">Beef Smash Burger</h5>
             <span class="badge bg-secondary mb-2">Burgers</span>
             <div class="d-flex justify-content-between align-items-center mt-2">
               <strong style="color: var(--text-main);">Rs. 650</strong>
-              <button class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
+              <button type="button" class="primary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" 
                       onclick="addToCart('Beef Smash Burger', 650, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80')">
                 + Add
               </button>
@@ -181,17 +181,17 @@
     </main>
   </div>
 
-  <div class="drawer-overlay"></div>
+  <div class="drawer-overlay" onclick="toggleCart()"></div>
   <div class="cart-drawer">
     <div class="d-flex justify-content-between align-items-center pb-3 border-bottom">
       <h5 style="margin: 0;">Your Cart</h5>
-      <button class="close-btn" onclick="toggleCart()">&times;</button>
+      <button type="button" class="close-btn" onclick="toggleCart()">&times;</button>
     </div>
 
     <div class="cart-items"></div>
 
     <div class="pt-3 border-top">
-      <button class="primary-btn" style="width: 100%; justify-content: center;">Checkout</button>
+      <button type="button" class="primary-btn" style="width: 100%; justify-content: center;">Checkout</button>
     </div>
   </div>
 
