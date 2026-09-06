@@ -206,7 +206,7 @@ body {
   font-size: 0.8rem;
 }
 
-/* Hero Section */
+/* Hero Section Fix - Image Size Controlled */
 .hero-section {
   display: flex;
   align-items: center;
@@ -214,10 +214,11 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 20px;
-  padding: 2.5rem;
+  padding: 2rem;
   margin-bottom: 2.5rem;
   position: relative;
   overflow: hidden;
+  max-height: 380px; /* Oversized image fix */
 }
 
 .hero-badge {
@@ -230,9 +231,9 @@ body {
 }
 
 .hero-content h1 {
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   font-weight: 800;
-  margin: 15px 0;
+  margin: 10px 0;
   line-height: 1.1;
 }
 
@@ -243,7 +244,8 @@ body {
 .hero-content p {
   color: var(--text-muted);
   max-width: 400px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
 }
 
 .hero-actions {
@@ -276,20 +278,21 @@ body {
 
 .hero-food {
   position: relative;
-  width: 280px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .hero-img-box {
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   overflow: hidden;
   z-index: 2;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 4px solid var(--border-color);
 }
 
 .hero-img {
@@ -308,7 +311,7 @@ body {
   z-index: 3;
 }
 
-.card-one { top: 10px; left: -20px; }
+.card-one { top: 10px; left: -10px; }
 .card-two { bottom: 10px; right: -10px; }
 
 /* Sections Heading & Categories */
@@ -331,11 +334,12 @@ body {
 }
 
 .section-heading h2 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
 }
 
+/* Category & Filter Buttons Uniform Fix */
 .category-grid, .filter-buttons {
   display: flex;
   gap: 10px;
@@ -353,6 +357,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  transition: 0.2s ease;
+}
+
+.category-card:hover, .filter-btn:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: #444 !important;
 }
 
 .category-card.active, .filter-btn.active {
