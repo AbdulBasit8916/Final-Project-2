@@ -1,133 +1,215 @@
-// Cart Items Array
+// ==========================================
+// 1. GLOBAL STATE & SELECTORS
+// ==========================================
 let cart = [];
 
-// Toggle Cart Overlay
-function toggleCart() {
-  const overlay = document.querySelector('.drawer-overlay');
-  const drawer = document.querySelector('.cart-drawer');
-  
-  if (overlay && drawer) {
-    overlay.classList.toggle('active');
-    drawer.classList.toggle('active');
-  }
-}
+// Demo Credentials
+const VALID_EMAIL = "user@gmail.com";
+const VALID_PASSWORD = "password123";
 
-// Add Item to Cart
-function addToCart(name, price, img) {
-  const existingItem = cart.find(item => item.name === name);
-  
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({
-      name: name,
-      price: price,
-      img: img,
-      quantity: 1
-    });
-  }
-  
-  updateCartUI();
-  toggleCart();
-}
+// Standard Email Regex Pattern
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-// Remove Item from Cart
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  updateCartUI();
-}
+// Default Fallback Image (Agar pic provide na ho)
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop";
 
-// Update Cart Display
-function updateCartUI() {
-  const cartContainer = document.querySelector('.cart-items');
-  const cartBadge = document.querySelector('.cart-count');
-  
-  if (!cartContainer) return;
+// ==========================================
+// 2. AUTHENTICATION & VALIDATION
+// ==========================================
+function handleLogin(event) {
+  event.preventDefault();
 
-  const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
-  if (cartBadge) {
-    cartBadge.textContent = totalCount;
-  }
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const errorElement = document.getElementById("login-error");
 
-  cartContainer.innerHTML = '';
+  const email = emailInput ? emailInput.value.trim() : "";
+  const password = passwordInput ? passwordInput.value.trim() : "";
 
-  if (cart.length === 0) {
-    cartContainer.innerHTML = '<p class="text-center text-muted my-4">Your cart is empty.</p>';
+  // Reset Input Borders
+  if (emailInput) emailInput.style.borderColor = "var(--border-color)";
+  if (passwordInput) passwordInput.style.borderColor = "var(--border-color)";
+
+  // 1. Empty Check
+  if (!email || !password) {
+    showError(errorElement, "Please enter both email and password.");
+    if (!email && emailInput) emailInput.style.borderColor = "#ff5722";
+    if (!password && passwordInput) passwordInput.style.borderColor = "#ff5722";
     return;
   }
 
-  cart.forEach((item, index) => {
-    const itemElement = document.createElement('div');
-    itemElement.className = 'd-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary';
-    itemElement.innerHTML = `
-      <div class="d-flex align-items-center gap-3">
-        <img src="${item.img}" alt="${item.name}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;">
-        <div>
-          <h6 class="mb-0" style="font-size: 0.85rem; color: #fff;">${item.name}</h6>
-          <small class="text-muted">Rs. ${item.price} x ${item.quantity}</small>
+  // 2. Email Pattern Check
+  if (!EMAIL_REGEX.test(email)) {
+    showError(errorElement, "Ghalat Gmail / Email format! Sahi email enter karein.");
+    if (emailInput) emailInput.style.borderColor = "#ff5722";
+    return;
+  }
+
+  // 3. Incorrect Password or Email Check
+  if (email !== VALID_EMAIL || password !== VALID_PASSWORD) {
+    showError(errorElement, "Ghalat Email ya Password! Dobara koshish karein.");
+    if (emailInput) emailInput.style.borderColor = "#ff5722";
+    if (passwordInput) passwordInput.style.borderColor = "#ff5722";
+    return;
+  }
+
+  // Success
+  if (errorElement) errorElement.style.display = "none";
+  showToast("Login Successful!");
+
+  // Close Modal
+  const loginModalEl = document.getElementById("loginModal");
+  if (loginModalEl && window.bootstrap) {
+    const modal = bootstrap.Modal.getInstance(loginModalEl);
+    if (modal) modal.hide();
+  }
+}
+
+function showError(element, message) {
+  if (element) {
+    element.innerText = message;
+    element.style.display = "block";
+  } else {
+    showToast(message);
+  }
+}
+
+// ==========================================
+// 3. TOAST NOTIFICATION SYSTEM
+// ==========================================
+function showToast(message) {
+  let existingToast = document.querySelector(".toast-notification");
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  const toast = document.createElement("div");
+  toast.className = "toast-notification";
+  toast.setAttribute("role", "alert");
+  toast.innerHTML = `<i class="bi bi-check-circle-fill" style="color:#4caf50;"></i> <span>${message}</span>`;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transition = "opacity 0.4s ease";
+    setTimeout(() => toast.remove(), 400);
+  }, 3000);
+}
+
+// ==========================================
+// 4. CART & DRAWER FUNCTIONS
+// ==========================================
+function addToCart(itemName, price, imageSrc) {
+  // Image Fallback Handling
+  const finalImage = imageSrc && imageSrc.trim() !== "" ? imageSrc : DEFAULT_IMAGE;
+
+  const existingItem = cart.find((item) => item.name === itemName);
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ name: itemName, price: price, image: finalImage, quantity: 1 });
+  }
+
+  updateCartUI();
+  showToast(`${itemName} added to cart!`);
+}
+
+function updateCartUI() {
+  const cartCountEl = document.querySelector(".cart-count");
+  const cartItemsContainer = document.querySelector(".cart-items");
+
+  // Total Quantity Count
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  if (cartCountEl) cartCountEl.innerText = totalCount;
+
+  // Render Cart Items
+  if (cartItemsContainer) {
+    cartItemsContainer.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your cart is empty.</p>`;
+      return;
+    }
+
+    cart.forEach((item, index) => {
+      const itemEl = document.createElement("div");
+      itemEl.className = "cart-item";
+      itemEl.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="${item.image}" class="cart-item-img" alt="${item.name}" onerror="this.src='${DEFAULT_IMAGE}'">
+          <div>
+            <h6 style="margin: 0; color: var(--text-main); font-weight: 600;">${item.name}</h6>
+            <small style="color: var(--text-muted);">Rs. ${item.price} x ${item.quantity}</small>
+          </div>
         </div>
-      </div>
-      <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})">
-        <i class="bi bi-trash"></i>
-      </button>
-    `;
-    cartContainer.appendChild(itemElement);
+        <button onclick="removeFromCart(${index})" class="close-btn" style="color: #ff5722;">&times;</button>
+      `;
+      cartItemsContainer.appendChild(itemEl);
+    });
+  }
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCartUI();
+  showToast("Item removed from cart.");
+}
+
+function toggleCart() {
+  const cartDrawer = document.querySelector(".cart-drawer");
+  const drawerOverlay = document.querySelector(".drawer-overlay");
+
+  if (cartDrawer) cartDrawer.classList.toggle("active");
+  if (drawerOverlay) drawerOverlay.classList.toggle("active");
+}
+
+// ==========================================
+// 5. MENU & BUTTON INTERACTIVITY
+// ==========================================
+function setupMenuButtons() {
+  // Navigation Menu Active Class Switcher
+  const navLinks = document.querySelectorAll(".nav-link");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      navLinks.forEach((l) => l.classList.remove("active"));
+      this.classList.add("active");
+    });
+  });
+
+  // Category & Filter Buttons Switcher
+  const filterBtns = document.querySelectorAll(".category-card, .filter-btn");
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const parent = this.parentElement;
+      if (parent) {
+        parent.querySelectorAll(".category-card, .filter-btn").forEach((b) => b.classList.remove("active"));
+      }
+      this.classList.add("active");
+    });
   });
 }
 
-// Form Submission & Validation Logic
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('loginForm');
-  const errorElement = document.getElementById('login-error');
-
+// ==========================================
+// 6. INITIALIZATION & EVENT LISTENERS
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Attach Login Event
+  const loginForm = document.getElementById("loginForm");
   if (loginForm) {
-    loginForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      if (errorElement) {
-        errorElement.style.display = 'none';
-        errorElement.textContent = '';
-      }
-
-      // 1. Email check (@ and .)
-      const hasAtSymbol = email.includes('@');
-      const hasDotSymbol = email.includes('.');
-
-      if (!hasAtSymbol || !hasDotSymbol) {
-        showError('Email must contain both "@" and "."');
-        return;
-      }
-
-      // 2. Password length check (8 digits)
-      if (password.length < 8) {
-        showError('Password must be at least 8 characters long.');
-        return;
-      }
-
-      // Successful Login Action
-      alert('Login Successful!');
-      
-      const modalElement = document.getElementById('loginModal');
-      if (modalElement) {
-        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-        if (modalInstance) {
-          modalInstance.hide();
-        }
-      }
-      
-      loginForm.reset();
-    });
+    loginForm.addEventListener("submit", handleLogin);
   }
 
-  function showError(message) {
-    if (errorElement) {
-      errorElement.textContent = message;
-      errorElement.style.display = 'block';
-    } else {
-      alert(message);
-    }
-  }
+  // Cart Toggle Listeners
+  const cartBtn = document.querySelector(".top-actions .icon-btn");
+  const closeCartBtn = document.querySelector(".cart-drawer .close-btn");
+  const drawerOverlay = document.querySelector(".drawer-overlay");
+
+  if (cartBtn) cartBtn.addEventListener("click", toggleCart);
+  if (closeCartBtn) closeCartBtn.addEventListener("click", toggleCart);
+  if (drawerOverlay) drawerOverlay.addEventListener("click", toggleCart);
+
+  // Setup Menu and Category Buttons
+  setupMenuButtons();
 });
