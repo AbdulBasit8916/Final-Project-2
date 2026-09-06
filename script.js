@@ -1,7 +1,7 @@
-// Cart items array
+// Cart Items Array
 let cart = [];
 
-// Toggle Cart Drawer
+// Toggle Cart Overlay
 function toggleCart() {
   const overlay = document.querySelector('.drawer-overlay');
   const drawer = document.querySelector('.cart-drawer');
@@ -37,20 +37,18 @@ function removeFromCart(index) {
   updateCartUI();
 }
 
-// Update Cart UI
+// Update Cart Display
 function updateCartUI() {
   const cartContainer = document.querySelector('.cart-items');
   const cartBadge = document.querySelector('.cart-count');
   
   if (!cartContainer) return;
 
-  // Update total items count in badge
   const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
   if (cartBadge) {
     cartBadge.textContent = totalCount;
   }
 
-  // Clear container
   cartContainer.innerHTML = '';
 
   if (cart.length === 0) {
@@ -58,15 +56,14 @@ function updateCartUI() {
     return;
   }
 
-  // Render items
   cart.forEach((item, index) => {
     const itemElement = document.createElement('div');
-    itemElement.className = 'd-flex align-items-center justify-content-between mb-3 pb-2 border-bottom';
+    itemElement.className = 'd-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary';
     itemElement.innerHTML = `
       <div class="d-flex align-items-center gap-3">
-        <img src="${item.img}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+        <img src="${item.img}" alt="${item.name}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;">
         <div>
-          <h6 class="mb-0" style="font-size: 0.9rem;">${item.name}</h6>
+          <h6 class="mb-0" style="font-size: 0.85rem; color: #fff;">${item.name}</h6>
           <small class="text-muted">Rs. ${item.price} x ${item.quantity}</small>
         </div>
       </div>
@@ -78,7 +75,7 @@ function updateCartUI() {
   });
 }
 
-// Form Submission with Strict Email and Password Validation
+// Form Submission & Validation Logic
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   const errorElement = document.getElementById('login-error');
@@ -90,31 +87,29 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
 
-      // Clear previous errors
       if (errorElement) {
         errorElement.style.display = 'none';
         errorElement.textContent = '';
       }
 
-      // Email Format Verification (@ and . check)
+      // 1. Email check (@ and .)
       const hasAtSymbol = email.includes('@');
       const hasDotSymbol = email.includes('.');
 
       if (!hasAtSymbol || !hasDotSymbol) {
-        showError('Please enter a valid email containing both "@" and "."');
+        showError('Email must contain both "@" and "."');
         return;
       }
 
-      // Password Length Verification (Min 8 characters)
+      // 2. Password length check (8 digits)
       if (password.length < 8) {
         showError('Password must be at least 8 characters long.');
         return;
       }
 
-      // Success Callback
+      // Successful Login Action
       alert('Login Successful!');
       
-      // Close Bootstrap modal programmatically
       const modalElement = document.getElementById('loginModal');
       if (modalElement) {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
