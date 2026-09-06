@@ -3,12 +3,15 @@
 // ==========================================
 let cart = [];
 
-// Demo Credentials (Yahan aap apni sahi Email/Password set kar sakte hain)
+// Demo Credentials
 const VALID_EMAIL = "user@gmail.com";
 const VALID_PASSWORD = "password123";
 
-// Standard Email Regex Pattern (Har qism ki email format check karne ke liye)
+// Standard Email Regex Pattern
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+// Default Fallback Image (Agar pic provide na ho)
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop";
 
 // ==========================================
 // 2. AUTHENTICATION & VALIDATION
@@ -35,7 +38,7 @@ function handleLogin(event) {
     return;
   }
 
-  // 2. Email Pattern Check (Saree invalid formats ke liye)
+  // 2. Email Pattern Check
   if (!EMAIL_REGEX.test(email)) {
     showError(errorElement, "Ghalat Gmail / Email format! Sahi email enter karein.");
     if (emailInput) emailInput.style.borderColor = "#ff5722";
@@ -53,8 +56,8 @@ function handleLogin(event) {
   // Success
   if (errorElement) errorElement.style.display = "none";
   showToast("Login Successful!");
-  
-  // Close Modal if using Bootstrap/Custom Modal
+
+  // Close Modal
   const loginModalEl = document.getElementById("loginModal");
   if (loginModalEl && window.bootstrap) {
     const modal = bootstrap.Modal.getInstance(loginModalEl);
@@ -75,13 +78,11 @@ function showError(element, message) {
 // 3. TOAST NOTIFICATION SYSTEM
 // ==========================================
 function showToast(message) {
-  // Check if toast already exists, remove it
   let existingToast = document.querySelector(".toast-notification");
   if (existingToast) {
     existingToast.remove();
   }
 
-  // Create Toast Element
   const toast = document.createElement("div");
   toast.className = "toast-notification";
   toast.setAttribute("role", "alert");
@@ -89,7 +90,6 @@ function showToast(message) {
 
   document.body.appendChild(toast);
 
-  // Auto-remove after 3 seconds
   setTimeout(() => {
     toast.style.opacity = "0";
     toast.style.transition = "opacity 0.4s ease";
@@ -101,12 +101,15 @@ function showToast(message) {
 // 4. CART & DRAWER FUNCTIONS
 // ==========================================
 function addToCart(itemName, price, imageSrc) {
+  // Image Fallback Handling
+  const finalImage = imageSrc && imageSrc.trim() !== "" ? imageSrc : DEFAULT_IMAGE;
+
   const existingItem = cart.find((item) => item.name === itemName);
 
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
-    cart.push({ name: itemName, price: price, image: imageSrc, quantity: 1 });
+    cart.push({ name: itemName, price: price, image: finalImage, quantity: 1 });
   }
 
   updateCartUI();
@@ -116,7 +119,7 @@ function addToCart(itemName, price, imageSrc) {
 function updateCartUI() {
   const cartCountEl = document.querySelector(".cart-count");
   const cartItemsContainer = document.querySelector(".cart-items");
-  
+
   // Total Quantity Count
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   if (cartCountEl) cartCountEl.innerText = totalCount;
@@ -135,7 +138,7 @@ function updateCartUI() {
       itemEl.className = "cart-item";
       itemEl.innerHTML = `
         <div style="display: flex; align-items: center; gap: 10px;">
-          <img src="${item.image || 'https://via.placeholder.com/50'}" class="cart-item-img" alt="${item.name}">
+          <img src="${item.image}" class="cart-item-img" alt="${item.name}" onerror="this.src='${DEFAULT_IMAGE}'">
           <div>
             <h6 style="margin: 0; color: var(--text-main); font-weight: 600;">${item.name}</h6>
             <small style="color: var(--text-muted);">Rs. ${item.price} x ${item.quantity}</small>
@@ -163,7 +166,33 @@ function toggleCart() {
 }
 
 // ==========================================
-// 5. INITIALIZATION & EVENT LISTENERS
+// 5. MENU & BUTTON INTERACTIVITY
+// ==========================================
+function setupMenuButtons() {
+  // Navigation Menu Active Class Switcher
+  const navLinks = document.querySelectorAll(".nav-link");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      navLinks.forEach((l) => l.classList.remove("active"));
+      this.classList.add("active");
+    });
+  });
+
+  // Category & Filter Buttons Switcher
+  const filterBtns = document.querySelectorAll(".category-card, .filter-btn");
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const parent = this.parentElement;
+      if (parent) {
+        parent.querySelectorAll(".category-card, .filter-btn").forEach((b) => b.classList.remove("active"));
+      }
+      this.classList.add("active");
+    });
+  });
+}
+
+// ==========================================
+// 6. INITIALIZATION & EVENT LISTENERS
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   // Attach Login Event
@@ -180,4 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (cartBtn) cartBtn.addEventListener("click", toggleCart);
   if (closeCartBtn) closeCartBtn.addEventListener("click", toggleCart);
   if (drawerOverlay) drawerOverlay.addEventListener("click", toggleCart);
+
+  // Setup Menu and Category Buttons
+  setupMenuButtons();
 });
